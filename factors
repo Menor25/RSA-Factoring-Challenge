@@ -1,5 +1,29 @@
 #!/usr/bin/python3
-from factors_functions import *
-if __name__ == '__main__':
+"""Factorize as many numbers as possible into a product of two smaller numbers.
+"""
 
-    print(unix_time(print_factors))
+import sys
+import math
+
+
+try:
+    file_object = open(sys.argv[1], "r")
+except IndexError:
+    print("Usage: ./factors <file>")
+    exit()
+
+numbers = file_object.readlines()
+file_object.close()
+
+for num in numbers:
+    number = int(num.rstrip("\n"))
+    for i in range(2, int(math.sqrt(number)) + 1):
+        if number % i == 0:
+            q = i
+            break
+    for j in range(2, int(math.sqrt(number)) + 1):
+        if (number // i) * q == number:
+            p = number // i
+            break
+
+    print("{}={}*{}".format(number, p, q))
